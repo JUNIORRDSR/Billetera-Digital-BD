@@ -1,0 +1,248 @@
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
+    --background-color: #e8eef2;
+    --card-background: #ffffff;
+    --text-color: #37393a;
+    --gradient: linear-gradient(90deg, #3498db, #2ecc71);
+    --shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Estilos base */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+}
+
+/* Layout principal */
+.main-content {
+    flex: 1;
+}
+
+header {
+    background: var(--gradient);
+    color: white;
+    padding: 1.5rem 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+/* Tarjetas de configuración */
+.config-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+}
+
+.config-card h2 {
+    color: var(--primary-color);
+    margin-bottom: 0.8rem;
+    font-size: 1.2rem;
+}
+
+/* Grupos de información */
+.info-group {
+    margin-bottom: 0.8rem;
+    position: relative;
+}
+
+.info-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+}
+
+/* Valores y placeholders */
+.info-value {
+    padding: 0.5rem 1rem;
+    background: #f5f5f5;
+    border-radius: 8px;
+    min-height: 2.3rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+}
+
+/* Placeholders para campos vacíos */
+[id$="Display"]:empty::before,
+.info-value:empty::before {
+    color: #bdc3c7;
+    font-family: monospace;
+}
+
+#fullName:empty::before { content: "Juan Pérez González"; }
+#idType:empty::before { content: "Cédula de Ciudadanía"; }
+#idNumber:empty::before { content: "1234567890"; }
+#birthdate:empty::before { content: "01/01/1990"; }
+#emailDisplay:empty::before { content: "usuario@ejemplo.com"; }
+#phoneDisplay:empty::before { content: "+57 300 123 4567"; }
+
+/* Inputs y botones */
+.editable-input {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    min-height: 2.3rem;
+    line-height: 1;
+    transition: border-color 0.3s ease;
+}
+
+.editable-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* Contenedores de edición */
+.edit-container {
+    position: relative;
+    width: 100%;
+}
+
+.edit-form {
+    margin-top: 0.5rem;
+}
+
+/* Estilos de botones */
+.button-group {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+[class$="-btn"] {
+    padding: 0.5rem 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.save-btn, .change-password-btn {
+    background: var(--gradient);
+    color: white;
+    border: none;
+}
+
+.cancel-btn {
+    background: #f5f5f5;
+    color: #666;
+    border: 1px solid #ddd;
+}
+
+.save-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+}
+
+.cancel-btn:hover {
+    background: #ebebeb;
+}
+
+.change-password-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+}
+
+.password-group {
+    margin-bottom: 0.5rem;
+}
+
+/* Estilos del menú */
+.menu {
+    list-style: none;
+}
+
+.menu li a {
+    display: flex;
+    align-items: center;
+    padding: 1rem 2rem;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.menu li a i {
+    margin-right: 1rem;
+    width: 20px;
+}
+
+.menu li a:hover, .menu li a.active {
+    background: linear-gradient(90deg, #3498db, #2ecc71);
+    color: rgb(254, 255, 253);
+}
+
+.menu li a.logout {
+    color: #e74c3c;
+}
+
+.menu li a.logout:hover {
+    background: linear-gradient(90deg, #e74c3c, #c0392b);
+    color: white !important;
+}
+
+/* Agregar estos estilos */
+.password-input-container,
+.edit-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.edit-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    padding: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.edit-container .info-value {
+    padding-right: 40px; /* Espacio para el botón */
+    width: 100%;
+}
+
+.toggle-password,
+.edit-btn {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    padding: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggle-password:hover,
+.edit-btn:hover {
+    color: var(--primary-color);
+}
+
+
+
+

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyPay - Inicio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/styles/principal.css">
+    <link rel="stylesheet" href="/static/styles/css/inicio.css">
+</head>
+<body>
+    <div class="overlay"></div>
+
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <div class="close-sidebar">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="user-info">
+            <div class="user-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <span class="user-name">Usuario</span>
+        </div>
+        <!-- Menú de navegación -->
+        <ul class="menu">
+            <li><a href="inicio.html" class=""><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="configuracion.html"><i class="fas fa-cog"></i> Configuración</a></li>
+            <li><a href="login.html" class="logout"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <header>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <h1><i class="fas fa-wallet"></i> EasyPay</h1>
+        </header>
+
+        <main class="container">
+            <div class="card" id="balance-card">
+                <h2><i class="fas fa-coins"></i> Saldo total</h2>
+                <p id="total-balance">$3.00</p>
+            </div>
+            
+            <div class="options-grid">
+                <a href="retiros.html" class="button">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>Retiros</span>
+                    <small>Retira tu dinero</small>
+                </a>
+                <a href="transferencias.html" class="button">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>Transferencias</span>
+                    <small>Envía dinero</small>
+                </a>
+                
+                <a href="pagos.html" class="button">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <span>Pagos</span>
+                    <small>Paga tus servicios</small>
+                </a>
+                <a href="movimientos.html" class="button">
+                    <i class="fas fa-history"></i>
+                    <span>Historial</span>
+                    <small>Ver movimientos</small>
+                </a>
+                <a href="consignaciones.html" class="button">
+                    <i class="fas fa-piggy-bank"></i>
+                    <span>Consignaciones</span>
+                    <small>Deposita dinero</small>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/scripts/principal.js"></script>
+    <script src="/static/scripts/js/index.js"></script>
+</body>
+</html>
+
