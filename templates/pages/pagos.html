@@ -2,50 +2,110 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EasyPay - Pagos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/static/styles/principal.css">
-    <link rel="stylesheet" href="../css/pages/pagos.css">
+    <link rel="stylesheet" href="/static/styles/css/pagos.css">
 </head>
 <body>
-    <header>
-        <h1>EasyPay - Pagos</h1>
-        <nav>
-            <a href="../index.html" class="button">Volver al inicio</a>
-            <button id="logout">Cerrar sesión</button>
-        </nav>
-    </header>
-    <main>
-        <form id="pago-form">
-            <div>
-                <label for="servicio">Servicio:</label>
-                <select id="servicio" required>
-                    <optgroup label="Facturas">
-                        <option value="air-e">Air-e</option>
-                        <option value="gases-caribe">Gases del Caribe</option>
-                        <option value="triple-a">Triple A</option>
-                    </optgroup>
-                    <optgroup label="Recargas de minutos">
-                        <option value="claro">Claro</option>
-                        <option value="wom">WOM</option>
-                        <option value="tigo">Tigo</option>
-                        <option value="movistar">Movistar</option>
-                    </optgroup>
-                </select>
+    <div class="overlay"></div>
+
+    <!-- Sidebar de navegación -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <div class="close-sidebar">
+                <i class="fas fa-times"></i>
             </div>
-            <div>
-                <label for="monto">Monto:</label>
-                <input type="number" id="monto" min="0" step="0.01" required>
+        </div>
+        <div class="user-info">
+            <div class="user-avatar">
+                <i class="fas fa-user-circle"></i>
             </div>
-            <div>
-                <label for="referencia">Referencia (opcional):</label>
-                <input type="text" id="referencia">
+            <span class="user-name">Usuario</span>
+        </div>
+        <ul class="menu">
+            <li><a href="inicio.html"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="retiros.html"><i class="fas fa-money-bill-wave"></i> Retiros</a></li>
+            <li><a href="transferencias.html"><i class="fas fa-exchange-alt"></i> Transferencias</a></li>
+            <li><a href="pagos.html" class="active"><i class="fas fa-file-invoice-dollar"></i> Pagos</a></li>
+            <li><a href="movimientos.html"><i class="fas fa-history"></i> Movimientos</a></li>
+            <li><a href="consignaciones.html"><i class="fas fa-piggy-bank"></i> Consignaciones</a></li>
+            <li><a href="configuracion.html"><i class="fas fa-cog"></i> Configuración</a></li>
+            <li><a href="/templates/index.html" class="logout"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <header>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
             </div>
-            <button type="submit">Confirmar pago</button>
-        </form>
-    </main>
-    <script src="/static/scripts/principal.js"></script>
-    <script src="/static/scripts/pages/pagos.js"></script>
+            <h1>
+                <i class="fas fa-file-invoice-dollar"></i>
+                EasyPay - Pagos
+            </h1>
+        </header>
+        
+        <main>
+            <form id="pago-form">
+                <div class="form-header">
+                    <h2><i class="fas fa-file-invoice"></i> Nuevo Pago</h2>
+                    <div class="saldo-disponible">
+                        <span>Saldo disponible</span>
+                        <h3 id="available-balance">$0.00</h3>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="servicio">
+                            <i class="fas fa-list"></i>
+                            Servicio
+                        </label>
+                        <select id="servicio" required>
+                            <optgroup label="Facturas">
+                                <option value="air-e">Air-e</option>
+                                <option value="gases-caribe">Gases del Caribe</option>
+                                <option value="triple-a">Triple A</option>
+                            </optgroup>
+                            <optgroup label="Recargas de minutos">
+                                <option value="claro">Claro</option>
+                                <option value="wom">WOM</option>
+                                <option value="tigo">Tigo</option>
+                                <option value="movistar">Movistar</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="monto">
+                            <i class="fas fa-dollar-sign"></i>
+                            Monto a pagar
+                        </label>
+                        <input type="number" id="monto" min="0" step="0.01" required placeholder="0.00">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="referencia">
+                        <i class="fas fa-hashtag"></i>
+                        Referencia de pago
+                    </label>
+                    <input type="text" id="referencia" placeholder="Número de referencia">
+                </div>
+
+                <button type="submit">
+                    <i class="fas fa-check-circle"></i>
+                    Confirmar pago
+                </button>
+            </form>
+        </main>
+    </div>
+
+    <script src="/static/scripts/js/principal.js"></script>
+    <script src="/static/scripts/js/pagos.js"></script>
 </body>
 </html>
 

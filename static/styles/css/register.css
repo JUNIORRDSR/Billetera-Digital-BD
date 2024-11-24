@@ -114,7 +114,6 @@ a {
 a:hover {
     color: #2ecc71;
 }
-
 @media (max-width: 768px) {
     main {
         padding: 1.5rem;
@@ -128,3 +127,4 @@ a:hover {
         padding: 1.5rem;
     }
 }
+

@@ -50,10 +50,12 @@ h1, h2 {
   padding: 2rem;
   margin-bottom: 2rem;
   transition: transform 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 input, select {
@@ -76,6 +78,7 @@ button, .button {
   text-decoration: none;
   font-size: 1rem;
   transition: background-color 0.3s ease, transform 0.1s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 button:hover, .button:hover {
@@ -164,9 +167,11 @@ button:active, .button:active {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
     display: none;
     z-index: 999;
+    transition: all 0.3s ease;
 }
 
 .overlay.active {
@@ -177,5 +182,17 @@ button:active, .button:active {
     cursor: pointer;
     font-size: 24px;
     margin-right: 15px;
+}
+
+.sidebar.active ~ .overlay {
+    display: block;
+}
+
+.main-content {
+    transition: filter 0.3s ease;
+}
+
+.sidebar.active ~ .main-content {
+    filter: blur(2px);
 }
 
