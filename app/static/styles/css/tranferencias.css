@@ -254,8 +254,16 @@ button:hover {
 
 .menu li a.logout:hover {
     background: linear-gradient(135deg, #e74c3c, #c0392b);
-    color: white;
+    color: white !important;
     border-left: 3px solid #c0392b;
+}
+
+.menu li a.logout:hover i {
+    color: white !important;
+}
+
+.menu li a.logout:hover * {
+    color: white !important;
 }
 
 /* Overlay */

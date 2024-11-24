@@ -61,3 +61,35 @@ document.querySelectorAll('.menu a').forEach(link => {
     });
 });
 
+// Manejo de la visibilidad del saldo
+const showBalanceBtn = document.querySelector('.show-balance');
+const balanceElement = document.getElementById('total-balance');
+let isBalanceVisible = false;
+
+showBalanceBtn.addEventListener('click', (e) => {
+    e.stopPropagation(); // Prevenir que el click llegue a la tarjeta
+    isBalanceVisible = !isBalanceVisible;
+    balanceElement.classList.toggle('balance-hidden');
+    showBalanceBtn.innerHTML = isBalanceVisible ? 
+        '<i class="fas fa-eye-slash"></i><span>Ocultar saldo</span>' : 
+        '<i class="fas fa-eye"></i><span>Mostrar saldo</span>';
+});
+
+// Manejo del giro de la tarjeta
+const balanceCard = document.getElementById('balance-card');
+
+balanceCard.addEventListener('click', () => {
+    balanceCard.classList.toggle('flipped');
+});
+
+// Actualizar información del usuario en la tarjeta
+function updateCardUserInfo() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (currentUser) {
+        document.getElementById('user-name').textContent = currentUser.fullName || 'Usuario';
+        document.getElementById('user-phone').textContent = currentUser.phone || 'No disponible';
+    }
+}
+
+updateCardUserInfo();
+
