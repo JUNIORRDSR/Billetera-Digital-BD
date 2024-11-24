@@ -11,7 +11,7 @@ document.getElementById('login-form').addEventListener('submit', function(e) {
     }
 
     // Redirigir directamente al index
-    window.location.href = '/templates/pages/index.html';
+    window.location.href = '/app/templates/index.html';
 });
 
 

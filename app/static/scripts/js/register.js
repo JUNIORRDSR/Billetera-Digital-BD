@@ -17,6 +17,6 @@ document.getElementById('register-form').addEventListener('submit', function(eve
     }
 
     // Si todo está completo, redirigir
-    window.location.href = '../pages/index.html';
+    window.location.href = '/app/templates/login.html';
 });
 

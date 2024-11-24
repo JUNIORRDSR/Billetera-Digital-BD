@@ -25,7 +25,7 @@ document.getElementById('pago-form').addEventListener('submit', function(e) {
     addTransaction('Pago', `Pago de ${servicio} ${referencia ? '- Ref: ' + referencia : ''}`, -monto);
 
     alert('Pago realizado con éxito.');
-    window.location.href = '../index.html';
+    window.location.href = '/app/templates/index.html';
 });
 
 function addTransaction(type, description, amount) {
