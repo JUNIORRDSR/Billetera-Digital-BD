@@ -32,3 +32,4 @@ except Exception as e:
     logger.error(f"Error al inicializar la aplicación: {str(e)}")
     raise
 
+
