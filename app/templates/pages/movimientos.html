@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyPay - Movimientos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/app/static/styles/principal.css">
+    <link rel="stylesheet" href="/app/static/styles/css/movimientos.css">
+</head>
+<body>
+    <div class="overlay"></div>
+
+    <!-- Sidebar de navegación -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <div class="close-sidebar">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="user-info">
+            <div class="user-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <span class="user-name">Usuario</span>
+        </div>
+        <ul class="menu">
+            <li><a href="inicio.html"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="retiros.html"><i class="fas fa-money-bill-wave"></i> Retiros</a></li>
+            <li><a href="transferencias.html"><i class="fas fa-exchange-alt"></i> Transferencias</a></li>
+            <li><a href="pagos.html"><i class="fas fa-money-bill-alt"></i> Pagos</a></li>
+            <li><a href="movimientos.html" class="active"><i class="fas fa-history"></i> Movimientos</a></li>
+            <li><a href="consignaciones.html"><i class="fas fa-piggy-bank"></i> Consignaciones</a></li>
+            <li><a href="configuracion.html"><i class="fas fa-cog"></i> Configuración</a></li>
+            <li><a href="/app/templates/pages/index.html" class="logout"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <header>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <h1>
+                <i class="fas fa-history"></i>
+                EasyPay - Movimientos
+            </h1>
+        </header>
+        
+        <main>
+            <div class="table-container">
+                <table id="movimientos-table">
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-calendar"></i> Fecha</th>
+                            <th><i class="fas fa-user"></i> Usuario</th>
+                            <th><i class="fas fa-credit-card"></i> Cuenta</th>
+                            <th><i class="fas fa-tag"></i> Tipo</th>
+                            <th><i class="fas fa-dollar-sign"></i> Monto</th>
+                            <th><i class="fas fa-hashtag"></i> Referencia</th>
+                        </tr>
+                    </thead>
+                    <tbody id="movimientos-body">
+                        <!-- Movimientos serán agregados dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script src="/app/static/scripts/js/principal.js"></script>
+    <script src="/app/static/scripts/js/movimientos.js"></script>
+</body>
+</html>
+

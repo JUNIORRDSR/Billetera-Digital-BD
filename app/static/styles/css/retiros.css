@@ -1,0 +1,405 @@
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
+    --background-color: #e8eef2;
+    --card-background: #ffffff;
+    --text-color: #37393a;
+    --gradient: linear-gradient(90deg, #3498db, #2ecc71);
+    --shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Layout principal */
+.main-content {
+    flex: 1;
+    margin-left: 0;
+    transition: margin-left 0.3s ease;
+}
+
+main {
+    max-width: 600px;
+    margin: 1rem auto;
+    padding: 0 1rem;
+}
+
+/* Formulario de retiro */
+#retiro-form {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 1.2rem;
+    box-shadow: var(--shadow);
+}
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eef2f7;
+}
+
+.form-header h2 {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.saldo-disponible {
+    text-align: right;
+}
+
+.saldo-disponible span {
+    display: block;
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-bottom: 0.2rem;
+}
+
+.saldo-disponible h3 {
+    color: var(--primary-color);
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    margin-bottom: 0.8rem;
+}
+
+label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-bottom: 0.3rem;
+}
+
+input, select {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    background: #f8fafc;
+}
+
+input:focus, select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    outline: none;
+}
+
+button {
+    background: var(--gradient);
+    width: 100%;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .saldo-disponible {
+        text-align: left;
+        width: 100%;
+    }
+}
+
+/* Código de retiro */
+#codigo-retiro {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+.codigo-display {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin: 1rem 0;
+    letter-spacing: 3px;
+}
+
+/* Botones */
+button {
+    background: var(--gradient);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+/* Estilos del sidebar */
+.sidebar {
+    position: fixed;
+    left: -250px; /* Comienza oculto */
+    top: 0;
+    height: 100vh;
+    width: 250px;
+    background: white;
+    box-shadow: var(--shadow);
+    transition: left 0.3s ease;
+    z-index: 999;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 998;
+}
+
+.overlay.active {
+    display: block;
+}
+
+/* Ajuste del contenido principal cuando el sidebar está activo */
+.main-content {
+    flex: 1;
+    margin-left: 0;
+    transition: margin-left 0.3s ease;
+}
+
+.main-content.sidebar-active {
+    margin-left: 250px;
+}
+
+/* Estilos del menú */
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu li a {
+    display: flex;
+    align-items: center;
+    padding: 1rem 2rem;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.menu li a i {
+    margin-right: 1rem;
+    width: 20px;
+    text-align: center;
+}
+
+/* Efecto hover y active */
+.menu li a:hover,
+.menu li a.active {
+    background: var(--gradient);
+    color: white;
+}
+
+/* Estilo especial para el botón de logout */
+.menu li a.logout {
+    color: #e74c3c;
+    transition: all 0.3s ease;
+}
+
+.menu li a.logout:hover {
+    background: linear-gradient(90deg, #e74c3c, #c0392b);
+    color: white !important;
+}
+
+.menu li a.logout:hover i {
+    color: white;
+}
+
+/* Estilos del header */
+header {
+    background: var(--gradient);
+    color: white;
+    padding: 1.5rem 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+header h1 {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+header h1 i {
+    font-size: 2rem;
+}
+
+.menu-toggle {
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.menu-toggle:hover {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Hacer el header responsivo */
+@media (max-width: 768px) {
+    header {
+        padding: 1rem;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    .header-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .security-badges {
+        display: none;
+    }
+}
+
+/* Estilos del sidebar de código */
+.codigo-sidebar {
+    position: fixed;
+    right: -400px;
+    top: 0;
+    width: 400px;
+    height: 100vh;
+    background: white;
+    box-shadow: var(--shadow);
+    transition: right 0.3s ease;
+    z-index: 1000;
+}
+
+.codigo-sidebar.active {
+    right: 0;
+}
+
+.codigo-sidebar-content {
+    padding: 2rem;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.codigo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.close-codigo {
+    font-size: 2rem;
+    cursor: pointer;
+    color: #666;
+}
+
+.codigo-container {
+    text-align: center;
+    margin: 2rem 0;
+    padding: 2rem;
+    background: var(--background-color);
+    border-radius: 8px;
+}
+
+.codigo-display {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    letter-spacing: 5px;
+    margin: 1rem 0;
+}
+
+.detalles-retiro {
+    margin: 2rem 0;
+}
+
+.detalles-retiro p {
+    margin: 1rem 0;
+    color: var(--text-color);
+}
+
+.codigo-btn {
+    background: var(--gradient);
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.codigo-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+@media (max-width: 768px) {
+    .codigo-sidebar {
+        width: 100%;
+        right: -100%;
+    }
+}
+

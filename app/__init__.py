@@ -9,7 +9,7 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/app/static/', static_folder='static')
 
 # Configuración de la aplicación
 try:
