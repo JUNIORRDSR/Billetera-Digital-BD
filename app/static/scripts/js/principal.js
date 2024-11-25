@@ -21,5 +21,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     closeSidebar.addEventListener('click', closeSidebarFunction);
     overlay.addEventListener('click', closeSidebarFunction);
+
 });
 

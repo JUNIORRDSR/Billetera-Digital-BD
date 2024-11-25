@@ -13,10 +13,10 @@
             <div>
                 <label for="id-type">Tipo de identificación</label>
                 <select id="id-type" required>
-                    <option value="" disabled selected>Seleccione un tipo</option>
-                    <option value="cc">Cédula de Ciudadanía</option>
-                    <option value="ce">Cédula de Extranjería</option>
-                    <option value="passport">Pasaporte</option>
+                    <option value="cedula de ciudadania" disabled selected>Seleccione un tipo</option>
+                    <option value="cedula de ciudadania">Cédula de Ciudadanía</option>
+                    <option value="'cedula de extranjeria">Cédula de Extranjería</option>
+                    <option value="pasaporte">Pasaporte</option>
                 </select>
             </div>
             <div>
@@ -27,10 +27,11 @@
                 <label for="password">Contraseña</label>
                 <input type="password" id="password" placeholder="Ingrese su contraseña" required>
             </div>
-            <a href="/app/templates/pages/inicio.html" class="button-style">Iniciar sesión</a>
+            <input type="button" id="iniciar-sesion" class="button-style" value="Iniciar sesión" onclick="iniciarProcesoLogin()">
         </form>
         <p>¿No tienes una cuenta? <a href="/app/templates/pages/register.html">Regístrate aquí</a></p>
     </main>
+    <script src="/app/static/scripts/js/login.js"></script>
 </body>
 </html>
 

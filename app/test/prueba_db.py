@@ -2,8 +2,9 @@ import os
 import mysql.connector
 from mysql.connector import Error
 
+connection = None
 def check_db_connection():
-    connection = None
+    
     try:
         # Configura tus credenciales de conexión
         connection = mysql.connector.connect(
