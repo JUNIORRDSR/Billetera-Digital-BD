@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyPay - Configuración</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/app/static/styles/principal.css">
+    <link rel="stylesheet" href="/app/static/styles/css/configuracion.css">
+</head>
+<body>
+    <div class="overlay"></div>
+
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <div class="close-sidebar">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="user-info">
+            <div class="user-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <span class="user-name">Usuario</span>
+        </div>
+        <ul class="menu">
+            <li><a href="inicio.html"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="retiros.html" ><i class="fas fa-money-bill-wave"></i> Retiros</a></li>
+            <li><a href="transferencias.html"><i class="fas fa-exchange-alt"></i> Transferencias</a></li>
+            <li><a href="pagos.html"><i class="fas fa-money-bill-alt"></i> Pagos</a></li>
+            <li><a href="movimientos.html" ><i class="fas fa-history"></i> Movimientos</a></li>
+            <li><a href="consignaciones.html"><i class="fas fa-piggy-bank"></i> Consignaciones</a></li>
+            <li><a href="configuracion.html"class="active"><i class="fas fa-cog"></i> Configuración</a></li>
+            <li><a href="/app/templates/index.html" class="logout"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <header>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <h1><i class="fas fa-cog"></i> Configuración</h1>
+        </header>
+
+        <main class="container">
+            <div class="config-card">
+                <h2><i class="fas fa-user"></i> Información Personal</h2>
+                <div class="info-group">
+                    <label>Nombre completo</label>
+                    <p id="fullName" class="info-value"></p>
+                </div>
+                <div class="info-group">
+                    <label>Tipo de identificación</label>
+                    <p id="idType" class="info-value"></p>
+                </div>
+                <div class="info-group">
+                    <label>Número de identificación</label>
+                    <p id="idNumber" class="info-value"></p>
+                </div>
+                <div class="info-group">
+                    <label>Fecha de nacimiento</label>
+                    <p id="birthdate" class="info-value"></p>
+                </div>
+            </div>
+
+            <div class="config-card">
+                <h2><i class="fas fa-address-card"></i> Información de Contacto</h2>
+                <!-- Email -->
+                <div class="info-group">
+                    <label>Correo electrónico</label>
+                    <div class="edit-container">
+                        <p id="emailDisplay" class="info-value"></p>
+                        <button class="edit-btn" onclick="toggleEdit('email')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </div>
+                    <div id="emailEdit" class="edit-form" style="display: none;">
+                        <input type="email" id="email" class="editable-input">
+                        <div class="button-group">
+                            <button class="save-btn" onclick="updateEmail()">Guardar</button>
+                            <button class="cancel-btn" onclick="cancelEdit('email')">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Teléfono -->
+                <div class="info-group">
+                    <label>Teléfono</label>
+                    <div class="edit-container">
+                        <p id="phoneDisplay" class="info-value"></p>
+                        <button class="edit-btn" onclick="toggleEdit('phone')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </div>
+                    <div id="phoneEdit" class="edit-form" style="display: none;">
+                        <input type="tel" id="phone" class="editable-input">
+                        <div class="button-group">
+                            <button class="save-btn" onclick="updatePhone()">Guardar</button>
+                            <button class="cancel-btn" onclick="cancelEdit('phone')">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="config-card">
+                <h2><i class="fas fa-lock"></i> Seguridad</h2>
+                <div class="info-group">
+                    <button class="change-password-btn" onclick="toggleEdit('password')">
+                        Cambiar contraseña
+                    </button>
+                    <div id="passwordEdit" class="edit-form" style="display: none;">
+                        <div class="password-group">
+                            <label for="currentPassword">Contraseña actual</label>
+                            <div class="password-input-container">
+                                <input type="password" id="currentPassword" class="editable-input">
+                                <button type="button" class="toggle-password">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="password-group">
+                            <label for="newPassword">Nueva contraseña</label>
+                            <div class="password-input-container">
+                                <input type="password" id="newPassword" class="editable-input">
+                                <button type="button" class="toggle-password">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="password-group">
+                            <label for="confirmPassword">Confirmar contraseña</label>
+                            <div class="password-input-container">
+                                <input type="password" id="confirmPassword" class="editable-input">
+                                <button type="button" class="toggle-password">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="button-group">
+                            <button class="save-btn" onclick="updatePassword()">Guardar</button>
+                            <button class="cancel-btn" onclick="cancelEdit('password')">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/app/static/scripts//js/principal.js"></script>
+    <script src="/app/static/scripts/js/configuracion.js"></script>
+</body>
+</html>

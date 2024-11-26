@@ -1,0 +1,282 @@
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
+    --background-color: #f5f7fa;
+    --card-background: #ffffff;
+    --text-color: #2c3e50;
+    --gradient: linear-gradient(135deg, #3498db, #2ecc71);
+    --shadow: 0 4px 6px rgba(0,0,0,0.07);
+    --border-radius: 10px;
+}
+
+/* Layout principal */
+.main-content {
+    flex: 1;
+    margin-left: 0;
+    transition: margin-left 0.3s ease;
+    background: var(--background-color);
+    min-height: 100vh;
+}
+
+main {
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header */
+header {
+    background: var(--gradient);
+    color: white;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: var(--shadow);
+}
+
+header h1 {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+/* Tabla de movimientos */
+.table-container {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 1.2rem;
+    box-shadow: var(--shadow);
+    margin: 1rem;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: #f8f9fa;
+    padding: 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+td {
+    padding: 0.8rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.monto {
+    text-align: right;
+}
+
+tr:hover {
+    background-color: #f1f4f7;
+}
+
+/* Estilos para tipos de movimientos */
+.tipo-transferencia,
+.tipo-retiro,
+.tipo-pago,
+.tipo-consignación {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+}
+
+.tipo-transferencia {
+    background: rgba(52, 152, 219, 0.1);
+    color: #3498db;
+}
+
+.tipo-retiro {
+    background: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+}
+
+.tipo-pago {
+    background: rgba(155, 89, 182, 0.1);
+    color: #9b59b6;
+}
+
+.tipo-consignación {
+    background: rgba(46, 204, 113, 0.1);
+    color: #2ecc71;
+}
+
+/* Estilos para montos */
+.monto-positivo {
+    color: #2ecc71;
+    font-weight: 600;
+}
+
+.monto-negativo {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+/* Hover en las filas */
+tr:hover {
+    background: #f8fafc;
+}
+
+/* Sidebar y menú (igual que en transferencias.css) */
+.sidebar {
+    position: fixed;
+    left: -280px;
+    top: 0;
+    height: 100vh;
+    width: 280px;
+    background: white;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar-header {
+    padding: 0.8rem;
+    display: flex;
+    justify-content: flex-end;
+    border-bottom: 1px solid #eef2f7;
+}
+
+.close-sidebar {
+    cursor: pointer;
+    font-size: 1.3rem;
+    color: var(--text-color);
+    transition: transform 0.3s ease;
+}
+
+.close-sidebar:hover {
+    transform: scale(1.1);
+}
+
+.user-info {
+    padding: 1.2rem;
+    text-align: center;
+    background: linear-gradient(to bottom, #f8fafc, white);
+}
+
+.user-avatar {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 0.4rem;
+}
+
+.user-name {
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+/* Menú mejorado con gradiente */
+.menu {
+    list-style: none;
+    padding: 0.5rem 0;
+    margin: 0;
+}
+
+.menu li a {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1.5rem;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    border-left: 3px solid transparent;
+}
+
+.menu li a i {
+    margin-right: 0.8rem;
+    width: 20px;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+/* Hover con gradiente */
+.menu li a:hover,
+.menu li a.active {
+    background: var(--gradient);
+    color: white;
+    border-left: 3px solid var(--secondary-color);
+}
+
+/* Estilo especial para logout */
+.menu li a.logout {
+    color: #e74c3c;
+    margin-top: 0.5rem;
+    border-top: 1px solid #eef2f7;
+}
+
+.menu li a.logout:hover {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white !important;
+    border-left: 3px solid #c0392b;
+}
+
+.menu li a.logout:hover i {
+    color: white !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .table-container {
+        overflow-x: auto;
+    }
+    
+    table {
+        min-width: 800px;
+    }
+    
+    header h1 {
+        font-size: 1.3rem;
+    }
+}
+
+/* Overlay con blur */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+    display: none;
+    z-index: 999;
+    transition: all 0.3s ease;
+}
+
+.overlay.active {
+    display: block;
+}
+
+/* Cuando el sidebar está activo */
+.sidebar.active ~ .overlay {
+    display: block;
+}
+
+.main-content {
+    transition: filter 0.3s ease;
+}
+
+/* Aplicar blur al contenido principal cuando el sidebar está activo */
+.sidebar.active ~ .main-content {
+    filter: blur(2px);
+}

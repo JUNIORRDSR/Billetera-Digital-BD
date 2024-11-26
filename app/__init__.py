@@ -1,34 +1,53 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_marshmallow import Marshmallow
-from config import Config
 import os
 import logging
+import mysql.connector
+from mysql.connector import Error
+from app.bussines.Usuario import Usuario
+from app.bussines.Pago import Pago
+from app.bussines.Movimiento import Movimiento
+from app.bussines.Consignacion import Consignacion
+from app.bussines.Retiro import Retiro
 
 # Configurar logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/app/static/', static_folder='static')
 
-# Configuración de la aplicación
-try:
-    app.config['SQLALCHEMY_DATABASE_URI'] = Config.SQLALCHEMY_DATABASE_URI
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.secret_key = os.environ.get('SECRET_KEY') or 'tu_clave_secreta'
-    
-    logger.info(f"Conectando a la base de datos: {Config.SQLALCHEMY_DATABASE_URI}")
-    
-    # Inicializar extensiones
-    db = SQLAlchemy(app)
-    ma = Marshmallow(app)
+def create_db_connection():
+    try:
+        connection = mysql.connector.connect(
+            host=os.getenv("MYSQL_HOST"),
+            database=os.getenv("MYSQL_DATABASE"),
+            user=os.getenv("MYSQL_USER"),
+            password=os.getenv("MYSQL_PASSWORD")
+        )
+        if connection.is_connected():
+            logger.info("Conexión a la base de datos exitosa")
+            return connection
+    except Error as e:
+        logger.error(f"Error al conectar a la base de datos: {e}")
+        return None
 
-    # Importar rutas después de definir db
-    from app.routes import *
+# Crear la conexión a la base de datos
+db_connection = create_db_connection()
 
-    logger.info("Aplicación inicializada correctamente")
+# Instanciar las clases de negocio
+if db_connection:
+    db = {
+        'usuario': Usuario(db_connection),
+        'pago': Pago(db_connection),
+        'movimiento': Movimiento(db_connection),
+        'consignacion': Consignacion(db_connection),
+        'retiro': Retiro(db_connection)
+    }
+else:
+    logger.error("No se pudo establecer la conexión a la base de datos. Las clases de negocio no se instanciarán.")
 
-except Exception as e:
-    logger.error(f"Error al inicializar la aplicación: {str(e)}")
-    raise
+# Importar rutas después de definir db
+from app.routes import *
+
+logger.info("Aplicación inicializada correctamente")
+
 
