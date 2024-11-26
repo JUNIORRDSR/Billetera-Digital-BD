@@ -21,7 +21,7 @@ class Usuario:
                     password=os.getenv("MYSQL_PASSWORD")
                 )
                 logger.info("Conexión a la base de datos restablecida.")
-            except Error as e:
+            except mysql.connector.Error as e:
                 logger.error(f"Error al intentar reconectar a la base de datos: {str(e)}")
                 return False
         return True
@@ -60,7 +60,7 @@ class Usuario:
 
                 # Insertar la cuenta con el número de cuenta y saldo inicial
                 query_cuenta = """
-                INSERT INTO cuentas (id_usuario, numero_de_cuenta, saldo)
+                INSERT INTO cuenta (id_usuario, numero_de_cuenta, saldo)
                 VALUES (%s, %s, %s)
                 """
                 cursor.execute(query_cuenta, (usuario_id, numero_de_cuenta, 0))  # saldo inicial en 0
