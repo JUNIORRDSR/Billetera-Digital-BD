@@ -76,11 +76,9 @@ def register():
             return {'error': f'Falta el campo: {str(e)}'}, 400  # Retornar un error si falta un campo
         
         usuario = Usuario(db)
-        if usuario.registrar_usuario(tipo_de_id, nombre, apellido, numero_documento, telefono, correo, fecha_nacimiento, contraseña):
-            return {'message': 'Registro exitoso'}, 200  # Devolver un mensaje de éxito
-        else:
-            return {'error': 'Error al registrar el usuario'}, 500  # Devolver un mensaje de error
-
+        if not usuario.registrar_usuario(tipo_de_id, nombre, apellido, numero_documento, telefono, correo, fecha_nacimiento, contraseña):
+            return {'error': 'Error al registrar el usuario'}, 500  # Manejo de error
+        return {'message': 'Registro exitoso'}, 200
     return render_template('pages/register.html')
 
 
