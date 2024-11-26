@@ -133,3 +133,15 @@ class Consignacion:
             connection.close()
             return consignaciones
         return None
+    
+    def obtener_id_consignacion(self, telefono_origen):
+        query = """
+        SELECT id_consignacion FROM consignaciones WHERE telefono_origen = %s ORDER BY fecha DESC LIMIT 1
+        """
+        cursor = self.db.cursor()
+        cursor.execute(query, (telefono_origen,))
+        result = cursor.fetchone()
+        cursor.close()
+        if result:
+            return result[0]  # Devuelve solo el número de la ID
+        return None

@@ -1,17 +1,36 @@
 import mysql.connector
 from datetime import datetime
+import logging
+from flask import session
+import os
 
+logger = logging.getLogger(__name__)
 class Movimiento:
     def __init__(self, db_config):
         self.db_config = db_config
+        self.connection = None  # Inicializa la conexión como None
+
+    def verificar_conexion(self):
+        """Verifica si la conexión a la base de datos está activa."""
+        if self.connection is None or not self.connection.is_connected():
+            try:
+                self.connection = mysql.connector.connect(
+                    host=os.getenv("MYSQL_HOST"),
+                    database=os.getenv("MYSQL_DATABASE"),
+                    user=os.getenv("MYSQL_USER"),
+                    password=os.getenv("MYSQL_PASSWORD")
+                )
+                logger.info("Conexión a la base de datos restablecida.")
+            except mysql.connector.Error as e:
+                logger.error(f"Error al intentar reconectar a la base de datos: {str(e)}")
+                return False
+        return True
 
     def conectar_db(self):
-        try:
-            connection = mysql.connector.connect(**self.db_config)
-            return connection
-        except mysql.connector.Error as err:
-            print(f"Error al conectar a la base de datos: {err}")
+        """Conecta a la base de datos utilizando la configuración proporcionada."""
+        if not self.verificar_conexion():  # Verifica la conexión antes de intentar conectarse
             return None
+        return self.connection  # Devuelve la conexión activa
 
     def registrar_movimiento(self, fecha, id_cuenta, referencia, id_consignacion=None, id_retiro=None, id_pagos=None):
         connection = self.conectar_db()
@@ -22,7 +41,7 @@ class Movimiento:
             VALUES (%s, %s, %s, %s, %s, %s)
             """
             values = (fecha, id_cuenta, referencia, id_consignacion, id_retiro, id_pagos)
-            cursor.execute(query, values)
+            cursor.execute(query, (values))
             connection.commit()
             cursor.close()
             connection.close()

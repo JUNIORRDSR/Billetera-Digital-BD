@@ -2,6 +2,7 @@ from flask import render_template, request, redirect, jsonify, session  # Import
 from app import app,db_connection as db
 from app.bussines.Consignacion import Consignacion
 from app.bussines.Usuario import Usuario
+from app.bussines.Movimiento import Movimiento
 
 
 # Rutas de páginas principales
@@ -163,3 +164,36 @@ def obtener_saldo():
         return jsonify({'error': f'Error al obtener el saldo: {str(e)}'}), 500  # Manejo de error
 
     return jsonify({'saldo': saldo})  # Devuelve el saldo como JSON
+
+
+
+@app.route('/api/movimientos')  # Nueva ruta para obtener los movimientos en formato JSON
+def obtener_consignaciones():
+    Usuario = session.get('id_usuario')  # Obtener el ID del usuario
+    print(f"Número de teléfono almacenado en la sesión: {Usuario}")
+    
+    if Usuario is None:
+        return jsonify({'error': 'Número de teléfono de la cuenta de origen no disponible en la sesión'}), 400
+    
+    movimientos = Movimiento(db)
+    
+    try:
+        historial = movimientos.obtener_movimientos_usuario(Usuario)
+        print(f"movimientos de la cuenta de origen: {historial}")
+        
+        # Convertir los datos a un formato serializable a JSON
+        historial_serializable = [
+            {
+                'fecha': movimiento[0].strftime('%Y-%m-%d %H:%M:%S'),
+                'usuario': movimiento[1],
+                'cuenta': movimiento[2],
+                'tipo': movimiento[3],
+                'monto': float(movimiento[4]),
+                'referencia': movimiento[5]
+            }
+            for movimiento in historial
+        ]
+    except Exception as e:
+        return jsonify({'error': f'Error al obtener los movimientos: {str(e)}'}), 500  # Manejo de error
+
+    return jsonify(historial_serializable)  # Devuelve los movimientos como JSON

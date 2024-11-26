@@ -83,11 +83,11 @@ const movimientosSimulados = [
 ];
 
 // Función para cargar los movimientos en la tabla
-function cargarMovimientos() {
+function cargarMovimientos(movimientos) {
     const tbody = document.getElementById('movimientos-body');
     tbody.innerHTML = ''; // Limpiar tabla
 
-    movimientosSimulados.forEach(movimiento => {
+    movimientos.forEach(movimiento => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${movimiento.fecha}</td>
@@ -101,6 +101,20 @@ function cargarMovimientos() {
     });
 }
 
+// Función para obtener los movimientos desde la API
+async function obtenerMovimientos() {
+    try {
+        const response = await fetch('/api/movimientos');
+        if (!response.ok) {
+            throw new Error('Error al obtener los movimientos');
+        }
+        const movimientos = await response.json();
+        cargarMovimientos(movimientos);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
 // Cargar movimientos cuando la página esté lista
-document.addEventListener('DOMContentLoaded', cargarMovimientos);
+document.addEventListener('DOMContentLoaded', obtenerMovimientos);
 
