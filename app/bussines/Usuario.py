@@ -3,12 +3,13 @@ import logging
 import mysql.connector
 import random
 import logging
-
+from flask import session
 logger = logging.getLogger(__name__)
 
 class Usuario:
     def __init__(self, connection):
         self.connection = connection
+        self.id_cuenta = None  # Asegúrate de tener un atributo para almacenar el ID de la cuenta
 
     def verificar_conexion(self):
         """Verifica si la conexión a la base de datos está activa."""
@@ -80,7 +81,11 @@ class Usuario:
                 query = "SELECT * FROM usuario WHERE tipo_de_id = %s AND numero_documento = %s AND contraseña = %s"
                 cursor.execute(query, (tipo_de_id, numero_documento, contraseña))
                 usuario = cursor.fetchone()
-                return usuario
+                if usuario:  # Verificar si se encontró un usuario
+                    session['id_usuario'] = usuario[0]  # Cambiado para acceder al ID directamente
+                    print(f"ID de cuenta almacenado en la sesión: {session['id_usuario']}")
+                    return usuario
+                return None  # Retornar None si no se encontró el usuario
             except mysql.connector.Error as e:
                 logger.error(f"Error en la consulta de inicio de sesión: {str(e)}")
                 return None
@@ -97,3 +102,6 @@ class Usuario:
             cursor.close()
             return usuario
         return None
+
+    def obtener_id_cuenta(self):
+        return self.id_cuenta  # Devuelve el ID de la cuenta almacenado
