@@ -2,13 +2,12 @@ import os
 import mysql.connector
 from mysql.connector import Error
 
-connection = None
 def check_db_connection():
-    
+    connection = None
     try:
         # Configura tus credenciales de conexión
         connection = mysql.connector.connect(
-            host=os.getenv("MYSQL_HOST"),  # Por ejemplo, 'localhost'
+            host=os.getenv("MYSQL_HOST", "localhost"),  # Por ejemplo, 'localhost'
             database=os.getenv("MYSQL_DATABASE"),  # Por ejemplo, 'my_database'
             user=os.getenv("MYSQL_USER"),  # Por ejemplo, 'root'
             password=os.getenv("MYSQL_PASSWORD")  # Por ejemplo, 'password'
