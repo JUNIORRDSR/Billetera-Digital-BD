@@ -1,7 +1,7 @@
 import mysql.connector
 import os
 import logging
-
+from flask import session
 logger = logging.getLogger(__name__)
 
 class Consignacion:
@@ -59,7 +59,11 @@ class Consignacion:
         if not self.verificar_cuenta(telefono_destino):
             return {'success': False, 'message': "La cuenta de destino no existe."}
 
-        saldo_origen = self.obtener_saldo(telefono_origen)
+        # Obtener el saldo de la base de datos usando el teléfono de origen
+        saldo_origen = self.obtener_saldo(telefono_origen)  # Cambiado para obtener el saldo de la base de datos
+        if saldo_origen is None:
+            return {'success': False, 'message': "No se pudo obtener el saldo de la cuenta de origen."}
+
         if monto > saldo_origen:
             return {'success': False, 'message': "El monto a consignar excede el saldo disponible en la cuenta de origen."}
 
@@ -75,13 +79,31 @@ class Consignacion:
                 values = (telefono_origen, telefono_destino, monto, descripcion, procedencia)
                 cursor.execute(query, values)
 
-                # Restar el monto del saldo del usuario de origen
-                #query_restar = "UPDATE cuenta SET saldo = saldo - %s WHERE id_usuario = (SELECT u.id_usuario FROM usuario as u JOIN consignacion as c ON u.telefono = c.telefono_origen WHERE c.telefono_origen = %s)"
-                #cursor.execute(query_restar, (monto, telefono_origen))
+                try:
+                    # Restar el monto del saldo del usuario de origen
+                    query_restar = """
+                    UPDATE cuenta 
+                    SET saldo = saldo - %s 
+                    WHERE id_usuario = (SELECT u.id_usuario FROM usuario as u WHERE u.telefono = %s)
+                    """
+                    cursor.execute(query_restar, (monto, telefono_origen))
 
-                # Sumar el monto al saldo del usuario de destino
-                #query_sumar = "UPDATE cuenta SET saldo = saldo + %s WHERE id_usuario = (SELECT u.id_usuario FROM usuario as u JOIN consignacion as c ON u.telefono = c.telefono_destino WHERE c.telefono_destino = %s)"
-                #cursor.execute(query_sumar, (monto, telefono_destino))
+                except mysql.connector.Error as e:
+                    connection.rollback()  # Revertir cambios en caso de error
+                    return {'success': False, 'message': f"Error al restar el monto del saldo del usuario de origen: {str(e)}"}
+
+                try:
+                    # Sumar el monto al saldo del usuario de destino
+                    query_sumar = """
+                    UPDATE cuenta 
+                    SET saldo = saldo + %s 
+                    WHERE id_usuario = (SELECT u.id_usuario FROM usuario as u WHERE u.telefono = %s)
+                    """
+                    cursor.execute(query_sumar, (monto, telefono_destino))
+
+                except mysql.connector.Error as e:
+                    connection.rollback()  # Revertir cambios en caso de error
+                    return {'success': False, 'message': f"Error al sumar el monto al saldo del usuario de destino: {str(e)}"}
 
                 connection.commit()
                 return {'success': True, 'message': "Transacción registrada con éxito."}  # Retornar éxito si se registra correctamente

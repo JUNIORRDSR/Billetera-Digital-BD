@@ -40,6 +40,8 @@ def login():
         usuario = Usuario(db)
         usuario_logueado = usuario.iniciar_sesion(tipo_de_id, numero_documento, contraseña)
         if usuario_logueado:
+            session['id_usuario'] = usuario_logueado[0]  # Almacenar ID de usuario
+            session['telefono_usuario'] = usuario_logueado[5]  # Almacenar número de teléfono (asegúrate de que el índice sea correcto)
             return {'message': 'Inicio de sesión exitoso'}, 200  # Devolver un mensaje de éxito
         else:
             return {'error': 'Credenciales incorrectas'}, 401  # Devolver un mensaje de error
@@ -97,11 +99,11 @@ def retiros():
 def registrar_transaccion():
     
     if request.method == 'POST':
-        # Obtener el ID de la cuenta de origen desde la sesión
-        telefono_origen = session.get('id_usuario')  # Obtener el ID de la cuenta de origen de la sesión
-        print(f"ID de cuenta almacenado en la sesión: {(telefono_origen)}")
+        # Obtener el número de teléfono de la cuenta de origen desde la sesión
+        telefono_origen = session.get('telefono_usuario')  # Cambiado para obtener el teléfono
+        print(f"Número de teléfono almacenado en la sesión: {telefono_origen}")
         if telefono_origen is None:
-            return jsonify({'error': 'ID de cuenta de origen no disponible en la sesión'}), 400
+            return jsonify({'error': 'Número de teléfono de la cuenta de origen no disponible en la sesión'}), 400
 
         # Obtener los datos del formulario
         data = request.get_json()  # Cambiar a request.get_json() para recibir datos JSON
