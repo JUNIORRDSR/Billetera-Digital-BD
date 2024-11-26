@@ -16,7 +16,7 @@ def index():
 
 @app.route('/app/templates/pages/inicio.html')
 def inicio():
-    return render_template('pages/inicio.html')
+    return render_template('pages/inicio.html')  # Pasa el saldo a la plantilla
 
 # ruta para la página de login
 @app.route('/app/templates/pages/login.html', methods=['GET', 'POST'])
@@ -118,7 +118,6 @@ def registrar_transaccion():
         # Crear una instancia de Consignacion y registrar la transacción
         consignacion = Consignacion(db)
         resultado = consignacion.registrar_consignacion(telefono_origen, telefono_destino, monto, descripcion, procedencia='EasyPay')
-        
         if resultado['success']:
             return jsonify({'message': resultado['message']}), 200  # Respuesta exitosa
         else:
@@ -146,3 +145,21 @@ def consignaciones():
 @app.route('/app/templates/pages/configuracion.html')
 def configuracion():
     return render_template('pages/configuracion.html')
+
+@app.route('/api/saldo')  # Nueva ruta para obtener el saldo en formato JSON
+def obtener_saldo():
+    telefono_origen = session.get('telefono_usuario')  # Obtener el teléfono del usuario
+    print(f"Número de teléfono almacenado en la sesión: {telefono_origen}")
+    
+    if telefono_origen is None:
+        return jsonify({'error': 'Número de teléfono de la cuenta de origen no disponible en la sesión'}), 400
+    
+    consignacion = Consignacion(db)
+    
+    try:
+        saldo = consignacion.obtener_saldo(telefono_origen)
+        print(f"Saldo de la cuenta de origen: {saldo}")
+    except Exception as e:
+        return jsonify({'error': f'Error al obtener el saldo: {str(e)}'}), 500  # Manejo de error
+
+    return jsonify({'saldo': saldo})  # Devuelve el saldo como JSON
