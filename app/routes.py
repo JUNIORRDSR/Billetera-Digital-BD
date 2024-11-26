@@ -1,11 +1,11 @@
-from flask import render_template, request, redirect, jsonify
+from flask import render_template, request, redirect, jsonify, session  # Importar el módulo de sesión de Flask
 from app import app,db_connection as db
 from app.bussines.Consignacion import Consignacion
 from app.bussines.Usuario import Usuario
 
 
-session = 1  # Variable de sesión para almacenar el ID de la cuenta del usuario logueado
 # Rutas de páginas principales
+@app.route('/app/templates/index.html')
 @app.route('/')
 @app.route('/index.html')
 def index():
@@ -13,6 +13,7 @@ def index():
 
 
 # ruta para la página de inicio
+
 @app.route('/app/templates/pages/inicio.html')
 def inicio():
     return render_template('pages/inicio.html')
@@ -39,7 +40,6 @@ def login():
         usuario = Usuario(db)
         usuario_logueado = usuario.iniciar_sesion(tipo_de_id, numero_documento, contraseña)
         if usuario_logueado:
-            session = usuario.obtener_id_cuenta()  # Almacenar el ID de la cuenta en la sesión
             return {'message': 'Inicio de sesión exitoso'}, 200  # Devolver un mensaje de éxito
         else:
             return {'error': 'Credenciales incorrectas'}, 401  # Devolver un mensaje de error
@@ -95,9 +95,11 @@ def retiros():
 # ruta para la página de transferencias
 @app.route('/app/templates/pages/transferencias.html', methods=['GET', 'POST', 'PUT'])
 def registrar_transaccion():
+    
     if request.method == 'POST':
         # Obtener el ID de la cuenta de origen desde la sesión
-        telefono_origen = session  # Obtener el ID de la cuenta de origen de la sesión
+        telefono_origen = session.get('id_usuario')  # Obtener el ID de la cuenta de origen de la sesión
+        print(f"ID de cuenta almacenado en la sesión: {(telefono_origen)}")
         if telefono_origen is None:
             return jsonify({'error': 'ID de cuenta de origen no disponible en la sesión'}), 400
 

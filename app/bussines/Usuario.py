@@ -3,7 +3,7 @@ import logging
 import mysql.connector
 import random
 import logging
-
+from flask import session
 logger = logging.getLogger(__name__)
 
 class Usuario:
@@ -81,7 +81,11 @@ class Usuario:
                 query = "SELECT * FROM usuario WHERE tipo_de_id = %s AND numero_documento = %s AND contraseña = %s"
                 cursor.execute(query, (tipo_de_id, numero_documento, contraseña))
                 usuario = cursor.fetchone()
-                return usuario
+                if usuario:  # Verificar si se encontró un usuario
+                    session['id_usuario'] = usuario[0]  # Cambiado para acceder al ID directamente
+                    print(f"ID de cuenta almacenado en la sesión: {session['id_usuario']}")
+                    return usuario
+                return None  # Retornar None si no se encontró el usuario
             except mysql.connector.Error as e:
                 logger.error(f"Error en la consulta de inicio de sesión: {str(e)}")
                 return None
