@@ -1,8 +1,10 @@
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, jsonify
 from app import app,db_connection as db
 from app.bussines.Consignacion import Consignacion
 from app.bussines.Usuario import Usuario
 
+
+session = 1  # Variable de sesión para almacenar el ID de la cuenta del usuario logueado
 # Rutas de páginas principales
 @app.route('/')
 @app.route('/index.html')
@@ -37,6 +39,7 @@ def login():
         usuario = Usuario(db)
         usuario_logueado = usuario.iniciar_sesion(tipo_de_id, numero_documento, contraseña)
         if usuario_logueado:
+            session = usuario.obtener_id_cuenta()  # Almacenar el ID de la cuenta en la sesión
             return {'message': 'Inicio de sesión exitoso'}, 200  # Devolver un mensaje de éxito
         else:
             return {'error': 'Credenciales incorrectas'}, 401  # Devolver un mensaje de error
@@ -90,22 +93,35 @@ def retiros():
     return render_template('pages/retiros.html')
 
 # ruta para la página de transferencias
-@app.route('/app/templates/pages/transferencias.html')
-def transferencias():
-    return render_template('pages/transferencias.html')
+@app.route('/app/templates/pages/transferencias.html', methods=['GET', 'POST', 'PUT'])
+def registrar_transaccion():
+    if request.method == 'POST':
+        # Obtener el ID de la cuenta de origen desde la sesión
+        telefono_origen = session  # Obtener el ID de la cuenta de origen de la sesión
+        if telefono_origen is None:
+            return jsonify({'error': 'ID de cuenta de origen no disponible en la sesión'}), 400
 
-@app.route('/app/templates/pages/transferencias.html')
-def registrar_consignacion():
-    data = request.form
-    id_cuenta_origen = data['id_cuenta_origen']
-    id_cuenta_destino = data['id_cuenta_destino']
-    monto = data['monto']
-    descripcion = data.get('descripcion', '')
-    procedencia = data['procedencia']
-    consignacion = Consignacion()
-    if consignacion.registrar_consignacion(id_cuenta_origen, id_cuenta_destino, monto, descripcion, procedencia):
-        return redirect('pages/transferencias.html')
-    return redirect('pages/transferencias.html?error=1')
+        # Obtener los datos del formulario
+        data = request.get_json()  # Cambiar a request.get_json() para recibir datos JSON
+        if not data:
+            return jsonify({'error': 'No se recibieron datos JSON'}), 400  # Manejo de error si no se reciben datos
+
+        # Verificar que las claves existen en el JSON
+        telefono_destino = data['cuentaDestino']
+        monto = data['monto']
+        descripcion = data.get('descripcion', '')  # Descripción opcional
+
+        # Crear una instancia de Consignacion y registrar la transacción
+        consignacion = Consignacion(db)
+        resultado = consignacion.registrar_consignacion(telefono_origen, telefono_destino, monto, descripcion, procedencia='EasyPay')
+        
+        if resultado['success']:
+            return jsonify({'message': resultado['message']}), 200  # Respuesta exitosa
+        else:
+            return jsonify({'error': resultado['message']}), 500  # Manejo de error
+
+    # Si es un método GET, simplemente renderiza la página de transferencias
+    return render_template('pages/transferencias.html')
 
 # ruta para la página de pagos
 @app.route('/app/templates/pages/pagos.html')

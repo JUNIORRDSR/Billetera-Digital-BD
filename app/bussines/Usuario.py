@@ -9,6 +9,7 @@ logger = logging.getLogger(__name__)
 class Usuario:
     def __init__(self, connection):
         self.connection = connection
+        self.id_cuenta = None  # Asegúrate de tener un atributo para almacenar el ID de la cuenta
 
     def verificar_conexion(self):
         """Verifica si la conexión a la base de datos está activa."""
@@ -97,3 +98,6 @@ class Usuario:
             cursor.close()
             return usuario
         return None
+
+    def obtener_id_cuenta(self):
+        return self.id_cuenta  # Devuelve el ID de la cuenta almacenado

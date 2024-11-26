@@ -22,14 +22,14 @@ USE `banco2` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `banco2`.`consignacion` (
   `id_consignacion` INT NOT NULL AUTO_INCREMENT,
-  `id_cuenta_origen` INT NOT NULL,
-  `id_cuenta_destino` INT NOT NULL,
+  `telefono_origen` INT NOT NULL,
+  `telefono_destino` INT NOT NULL,
   `monto` DECIMAL(15,2) NOT NULL,
   `descripcion` TEXT NULL,
   `procedencia` ENUM('Corresponsal Bancolombia', 'Nequi', 'otros Bancos') NOT NULL,
   PRIMARY KEY (`id_consignacion`),
-  INDEX `consignacion_id_cuenta_origen_index` (`id_cuenta_origen` ASC) VISIBLE,
-  INDEX `consignacion_id_cuenta_destino_index` (`id_cuenta_destino` ASC) VISIBLE)
+  INDEX `consignacion_telefono_origen_index` (`telefono_origen` ASC) VISIBLE,
+  INDEX `consignacion_telefono_destino_index` (`telefono_destino` ASC) VISIBLE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -217,7 +217,7 @@ VALUES
 
 select * from cuenta;
 
-INSERT INTO consignacion (id_cuenta_origen, id_cuenta_destino, monto, descripcion, procedencia)
+INSERT INTO consignacion (telefono_origen, telefono_destino, monto, descripcion, procedencia)
 VALUES
 (1, 2, 100000.00, 'Consignación de cuenta 1 a 2', 'Corresponsal Bancolombia'),
 (2, 3, 200000.00, 'Consignación de cuenta 2 a 3', 'Nequi'),
